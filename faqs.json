@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "question": "What is Artificial Intelligence (AI)?",
+        "answer": "Artificial Intelligence is a branch of computer science concerned with building smart machines capable of performing tasks that typically require human intelligence, such as visual perception, speech recognition, decision-making, and translation between languages."
+    },
+    {
+        "id": 2,
+        "question": "What is the difference between AI, Machine Learning, and Deep Learning?",
+        "answer": "Artificial Intelligence is the broad concept of machines acting smartly. Machine Learning (ML) is a subset of AI that allows machines to learn from data without explicit programming. Deep Learning (DL) is a subset of ML that uses multi-layered neural networks (like the human brain) to solve highly complex problems."
+    },
+    {
+        "id": 3,
+        "question": "What is Supervised Learning?",
+        "answer": "Supervised Learning is a type of Machine Learning where the model is trained on labeled data. The algorithm learns a mapping function from input variables to output variables using known input-output pairs (e.g., predicting house prices based on size and location)."
+    },
+    {
+        "id": 4,
+        "question": "What is Unsupervised Learning?",
+        "answer": "Unsupervised Learning is a type of Machine Learning where the model is trained on unlabeled data. The algorithm tries to find hidden patterns, groupings, or structures within the data without any pre-existing labels (e.g., customer segmentation using clustering)."
+    },
+    {
+        "id": 5,
+        "question": "What is Overfitting and how can it be prevented?",
+        "answer": "Overfitting occurs when a model learns the detail and noise in the training data to the extent that it negatively impacts the model's performance on new data. It can be prevented using techniques like cross-validation, regularization (L1/L2), pruning, dropout, or adding more training data."
+    },
+    {
+        "id": 6,
+        "question": "What is Natural Language Processing (NLP)?",
+        "answer": "Natural Language Processing is a field of AI that enables computers to understand, interpret, and manipulate human language. It is used in applications like translation, sentiment analysis, speech recognition, and chatbots."
+    },
+    {
+        "id": 7,
+        "question": "How does a FAQ Chatbot work?",
+        "answer": "A FAQ Chatbot works by analyzing the user's input, preprocessing it (tokenization, cleaning), converting the text into mathematical representations (like TF-IDF vectors), and matching it against a pre-defined set of FAQs using similarity metrics (such as Cosine Similarity) to find the best answer."
+    },
+    {
+        "id": 8,
+        "question": "What is Cosine Similarity?",
+        "answer": "Cosine Similarity is a metric used to measure how similar two vectors are. It measures the cosine of the angle between two vectors projected in a multi-dimensional space, which determines whether they are pointing in roughly the same direction (ranging from -1 to 1)."
+    },
+    {
+        "id": 9,
+        "question": "What is a Neural Network?",
+        "answer": "A Neural Network is a series of algorithms that endeavors to recognize underlying relationships in a set of data through a process that mimics the way the human brain operates. It consists of layers of interconnected nodes (neurons) that process inputs and generate outputs."
+    },
+    {
+        "id": 10,
+        "question": "What is Computer Vision?",
+        "answer": "Computer Vision is a field of AI that trains computers to interpret and understand the visual world. Using digital images from cameras and videos, machines can accurately identify and classify objects, and then react to what they see."
+    }
+]
