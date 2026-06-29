@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeAlpha AI Portal - Part 1</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #090d16 0%, #111827 50%, #030712 100%);
+            --panel-bg: rgba(17, 24, 39, 0.55);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --primary: #6366f1;
+            --accent: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #818cf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: left;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 250px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--panel-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .card:hover .icon-box {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .launch-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        footer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1><i class="fa-solid fa-brain"></i> CodeAlpha AI Hub</h1>
+            <p>Select either of the completed Tasks 1 & 2 below to run them directly in your browser.</p>
+        </header>
+
+        <div class="grid">
+            <!-- Task 1 -->
+            <a href="translator.html" class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="icon-box"><i class="fa-solid fa-language"></i></div>
+                        <h3>Task 1: Language Translator</h3>
+                    </div>
+                    <p>Translate text dynamically between languages and play speech using client-side Web Speech APIs.</p>
+                </div>
+                <div class="launch-link">
+                    <span>Open Application</span> <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- Task 2 -->
+            <a href="chatbot.html" class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="icon-box"><i class="fa-solid fa-comments"></i></div>
+                        <h3>Task 2: FAQ Chatbot</h3>
+                    </div>
+                    <p>An intelligent chatbot using NLP vector matching (TF-IDF & Cosine Similarity) to resolve user queries instantly.</p>
+                </div>
+                <div class="launch-link">
+                    <span>Open Application</span> <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+
+        <footer>
+            <p>CodeAlpha Artificial Intelligence Internship Projects - Tasks 1 & 2</p>
+        </footer>
+    </div>
+
+</body>
+</html>
