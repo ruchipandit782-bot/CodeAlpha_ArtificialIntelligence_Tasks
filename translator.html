@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Language Translator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #020617 100%);
+            --panel-bg: rgba(30, 41, 59, 0.45);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-light: rgba(99, 102, 241, 0.15);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #10b981;
+            --accent-light: rgba(16, 185, 129, 0.15);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .back-link {
+            align-self: flex-start;
+            margin-bottom: 25px;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: color 0.2s;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #818cf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .translator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .translator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        select {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            appearance: none;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus {
+            border-color: var(--primary);
+        }
+
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            font-size: 0.8rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 220px;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            font-family: inherit;
+            resize: none;
+            outline: none;
+            line-height: 1.6;
+            transition: all 0.3s;
+        }
+
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .output-box {
+            position: relative;
+        }
+
+        .output-text {
+            background: rgba(15, 23, 42, 0.5);
+            min-height: 220px;
+            padding: 20px;
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            color: #e2e8f0;
+        }
+
+        .placeholder-text {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .char-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--panel-border);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .translate-btn-wrapper {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .translate-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 16px 40px;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .translate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(16, 185, 129, 0.95);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: rgba(239, 68, 68, 0.95);
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to AI Hub</a>
+
+    <div class="container">
+        <header>
+            <h1><i class="fa-solid fa-language"></i> AI Language Translator</h1>
+            <p>Translate languages instantly and listen to translations using Text-to-Speech</p>
+        </header>
+
+        <div class="translator-grid">
+            <!-- Source Panel -->
+            <div class="input-group">
+                <div class="select-wrapper">
+                    <select id="source-lang">
+                        <option value="en" selected>English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="hi">Hindi</option>
+                        <option value="ja">Japanese</option>
+                    </select>
+                </div>
+                <textarea id="source-text" placeholder="Enter text to translate..." maxlength="5000"></textarea>
+                <div class="controls">
+                    <span class="char-count" id="char-count">0 / 5000</span>
+                    <button class="icon-btn" id="clear-btn" title="Clear Text"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+            </div>
+
+            <!-- Target Panel -->
+            <div class="input-group">
+                <div class="select-wrapper">
+                    <select id="target-lang">
+                        <option value="es" selected>Spanish</option>
+                        <option value="en">English</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="hi">Hindi</option>
+                        <option value="ja">Japanese</option>
+                    </select>
+                </div>
+                <div class="output-box">
+                    <div class="output-text" id="output-text"><span class="placeholder-text">Translation will appear here...</span></div>
+                </div>
+                <div class="controls" style="justify-content: flex-end;">
+                    <div class="action-btns">
+                        <button class="icon-btn" id="tts-btn" title="Listen to translation" onclick="playSpeech()"><i class="fa-solid fa-volume-high"></i></button>
+                        <button class="icon-btn" id="copy-btn" title="Copy to Clipboard" onclick="copyText()"><i class="fa-solid fa-copy"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="translate-btn-wrapper">
+            <button class="translate-btn" id="translate-btn" onclick="performTranslation()">
+                <span>Translate</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-check-circle" id="toast-icon"></i>
+        <span id="toast-message">Copied to clipboard!</span>
+    </div>
+
+    <script>
+        const sourceText = document.getElementById('source-text');
+        const outputText = document.getElementById('output-text');
+        const sourceLang = document.getElementById('source-lang');
+        const targetLang = document.getElementById('target-lang');
+        const charCount = document.getElementById('char-count');
+        const translateBtn = document.getElementById('translate-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const toast = document.getElementById('toast');
+        const toastIcon = document.getElementById('toast-icon');
+        const toastMsg = document.getElementById('toast-message');
+
+        sourceText.addEventListener('input', () => {
+            charCount.textContent = `${sourceText.value.length} / 5000`;
+        });
+
+        clearBtn.addEventListener('click', () => {
+            sourceText.value = '';
+            charCount.textContent = '0 / 5000';
+            outputText.innerHTML = '<span class="placeholder-text">Translation will appear here...</span>';
+        });
+
+        async function performTranslation() {
+            const textVal = sourceText.value.trim();
+            if (!textVal) {
+                showToast('Please enter text to translate.', true);
+                return;
+            }
+
+            translateBtn.disabled = true;
+            translateBtn.innerHTML = '<span>Translating...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
+
+            try {
+                const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textVal)}&langpair=${sourceLang.value}|${targetLang.value}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.responseData && data.responseData.translatedText) {
+                    outputText.innerText = data.responseData.translatedText;
+                } else {
+                    throw new Error('API limits exceeded/Failed');
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('Translation request failed.', true);
+            } finally {
+                translateBtn.disabled = false;
+                translateBtn.innerHTML = '<span>Translate</span> <i class="fa-solid fa-arrow-right"></i>';
+            }
+        }
+
+        function copyText() {
+            const text = outputText.innerText;
+            if (!text || outputText.querySelector('.placeholder-text')) return;
+            navigator.clipboard.writeText(text)
+                .then(() => showToast('Copied to clipboard!'))
+                .catch(() => showToast('Failed to copy', true));
+        }
+
+        function playSpeech() {
+            const text = outputText.innerText;
+            if (!text || outputText.querySelector('.placeholder-text')) return;
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = targetLang.value;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function showToast(msg, isError = false) {
+            toastMsg.textContent = msg;
+            if (isError) {
+                toast.classList.add('error');
+                toastIcon.className = 'fa-solid fa-circle-exclamation';
+            } else {
+                toast.classList.remove('error');
+                toastIcon.className = 'fa-solid fa-check-circle';
+            }
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
